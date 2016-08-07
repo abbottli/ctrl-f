@@ -304,8 +304,13 @@ function convert() {
 
 function draw(bitmap) {
   var char = document.getElementById('char').value;
-
+  var ref = char;
+  var thick = document.getElementById('thick').checked;
   document.getElementById('ctrlf').innerHTML = "<br>Ctrl + f then put in " + char + "<br><br>";
+  
+  if (document.getElementById('highlight').checked) {
+    char  = "<span style='background-color:yellow;'>" + char + "</span>";
+  }
 
   for(let i = 0, x; x = bitmap[i]; i++) {
     var line = '';
@@ -314,12 +319,15 @@ function draw(bitmap) {
       //var random = Math.random().toString(36).charAt(2);
       var random = Math.random().toString().charAt(2);
 
-      if (random === char) {
+      if (random === ref) {
         random = (random === '9') ? 
           '0' : String.fromCharCode(random.charCodeAt() + 1);
       }
 
       line += x[j] ? char : random;
+      if (thick) {
+        line += x[j] ? char : random;
+      }
     }
     document.getElementById('ctrlf').innerHTML += line + '<br>';
   }
